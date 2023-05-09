@@ -5,11 +5,6 @@ const createAlbum = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const artist = await db.query("SELECT * FROM Artists WHERE id = $1", [id]);
-    if (artist.rows.length === 0) {
-      return res.status(404).json({ message: "Artist not found" });
-    }
-
     const { rows } = await db.query(
       "INSERT INTO Album (name, year, artist_id) VALUES ($1, $2, $3) RETURNING *",
       [name, year, id]
