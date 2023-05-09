@@ -18,7 +18,7 @@ const createAlbum = async (req, res) => {
 
 const getAllAlbums = async (_, res) => {
   try {
-    const { rows } = await db.query("SELECT * from Artists");
+    const { rows } = await db.query("SELECT * from Album");
     res.status(200).json(rows);
   } catch (err) {
     res.status(500).json(err.message);
@@ -30,14 +30,14 @@ const getAlbumById = async (req, res) => {
 
   try {
     const {
-      rows: [artist],
-    } = await db.query("SELECT * from Artists WHERE id = $1", [id]);
+      rows: [album],
+    } = await db.query("SELECT * from Album WHERE id = $1", [id]);
 
-    if (!artist) {
-      return res.status(404).json({ message: `artist ${id} does not exist` });
+    if (!album) {
+      return res.status(404).json({ message: `album ${id} does not exist` });
     }
 
-    res.status(200).json(artist);
+    res.status(200).json(album);
   } catch (err) {
     res.status(500).json(err.message);
   }

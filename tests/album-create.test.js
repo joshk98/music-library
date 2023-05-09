@@ -5,37 +5,37 @@ const app = require("../src/app");
 
 describe("create album", () => {
   describe("/artists/:id/albums", () => {
+    let artists;
+
+    beforeEach(async () => {
+      const { rows } = await db.query(
+        "INSERT INTO Artists (name, genre) VALUES ($1, $2) RETURNING *",
+        ["Tame Impala", "rock"]
+      );
+
+      artists = rows;
+    });
+
     describe("POST", () => {
       it("creates a new album in the database", async () => {
-        // const { status: artistStatus, body: artistBody } = await request(app)
-        //   .post("/artists")
-        //   .send({
-        //     name: "Tame Impala",
-        //     genre: "rock",
-        //   });
-
-        // expect(artistStatus).to.equal(201);
-        // expect(artistBody.name).to.equal("Tame Impala");
-        // expect(artistBody.genre).to.equal("rock");
-
-        const { status: albumStatus, body: albumBody } = await request(app)
-          .post(`/artists/${artistBody.id}/albums`)
+        const { status, body } = await request(app)
+          .post(`/artists/${artists[0].id}/albums`)
           .send({
             name: "Innerspeaker",
             year: 2010,
           });
 
-        expect(albumStatus).to.equal(201);
-        expect(albumBody.name).to.equal("Innerspeaker");
-        expect(albumBody.year).to.equal(2010);
-        expect(albumBody.artist_id).to.equal(artistBody.id);
+        expect(status).to.equal(201);
+        expect(body.name).to.equal("Innerspeaker");
+        expect(body.year).to.equal(2010);
+        expect(body.artist_id).to.equal(artists[0].id);
 
-        const { rows: albumData } = await db.query(
-          `SELECT * FROM Album WHERE id = ${albumBody.id}`
+        const { rows } = await db.query(
+          `SELECT * FROM Album WHERE id = ${body.id}`
         );
-        expect(albumData[0].name).to.equal("Innerspeaker");
-        expect(albumData[0].year).to.equal(2010);
-        expect(albumData[0].artist_id).to.equal(artistBody.id);
+        expect(rows[0].name).to.equal("Innerspeaker");
+        expect(rows[0].year).to.equal(2010);
+        expect(rows[0].artist_id).to.equal(artists[0].id);
       });
     });
   });
