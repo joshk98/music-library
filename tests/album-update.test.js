@@ -49,28 +49,29 @@ describe("Update Album", () => {
     });
   });
 
-  describe("PATCH /artists/{id}", () => {
-    it("updates the artist and returns the updated record", async () => {
+  describe("PUT /albums/{id}", () => {
+    it("replaces the album and returns the updated record", async () => {
       const { status, body } = await request(app)
-        .patch(`/artists/${artist.id}`)
-        .send({ name: "something different", genre: "rock" });
+        .put(`/albums/${album.id}`)
+        .send({ name: "Some album", year: 2021 });
 
       expect(status).to.equal(200);
 
       expect(body).to.deep.equal({
-        id: artist.id,
-        name: "something different",
-        genre: "rock",
+        id: album.id,
+        name: "Some album",
+        year: 2021,
+        artist_id: artist.id,
       });
     });
 
-    it("returns a 404 if the artist does not exist", async () => {
+    it("returns a 404 if the album does not exist", async () => {
       const { status, body } = await request(app)
-        .patch("/artists/999999999")
-        .send({ name: "something different", genre: "rock" });
+        .put(`/albums/999999999`)
+        .send({ name: "Some album", year: 2021 });
 
       expect(status).to.equal(404);
-      expect(body.message).to.equal("artist 999999999 does not exist");
+      expect(body.message).to.equal("album 999999999 does not exist");
     });
   });
 });
