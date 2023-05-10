@@ -44,22 +44,22 @@ const getAlbumById = async (req, res) => {
 };
 
 const putAlbum = async (req, res) => {
-  const { name, genre } = req.body;
+  const { name, year } = req.body;
   const { id } = req.params;
 
   try {
     const {
-      rows: [artist],
+      rows: [album],
     } = await db.query(
-      "UPDATE Artists SET name = $1, genre = $2 WHERE id = $3 RETURNING *",
-      [name, genre, id]
+      "UPDATE Album SET name = $1, year = $2 WHERE id = $3 RETURNING *",
+      [name, year, id]
     );
 
-    if (!artist) {
-      return res.status(404).json({ message: `artist ${id} does not exist` });
+    if (!album) {
+      return res.status(404).json({ message: `album ${id} does not exist` });
     }
 
-    res.status(200).json(artist);
+    res.status(200).json(album);
   } catch (err) {
     res.status(500).json(err.message);
   }
