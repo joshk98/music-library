@@ -17,7 +17,7 @@
 <p>Start the server:</p>
 <pre><code>npm start</code></pre>
 <p>The server will start running on <code>http://localhost:3000</code>.</p>
-<h2>API Endpoints Example - /artists</h2>
+<h2>API Endpoints - /artists</h2>
 <h3>POST /artists</h3>
 <p>Create a new artist in the database.</p>
 <h3>GET /artists</h3>
