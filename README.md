@@ -14,8 +14,7 @@
 <p>Install the dependencies:</p>
 <pre><code>npm install</code></pre>
 <p>Create an .env file in your root with the following:</p>
-<pre><code>
-PGUSER=postgres
+<pre><code>PGUSER=postgres
 PGHOST=localhost
 PGPASSWORD=password
 PGDATABASE=music_library_dev
@@ -28,8 +27,7 @@ PORT=3000
 <p>Create a docker container:</p>
 <pre><code>docker run --name music-library -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres</code></pre>
 <p>Create an .env.test file in your root with the following:</p>
-<pre><code>
-PGPASSWORD=password
+<pre><code>PGPASSWORD=password
 PGDATABASE=music_library_test
 PGUSER=postgres
 PGHOST=localhost
